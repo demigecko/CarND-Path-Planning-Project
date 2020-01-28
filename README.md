@@ -1,6 +1,6 @@
 [//]: # (Image References)
 
-[image1]: ./data/highway.png "logic explanation" 
+[image1]: ./image/highway.png "logic explanation" 
 
 
 I. File list
