@@ -127,7 +127,7 @@ To avoid collision during lane changing, we need to provide enough clearance for
 
 ![alt text][image4]
 
-At the start of the simulator, the ego car is situated in lane = 1, and to accelerate without much jerk, I set the initial velocity to be zero, and it will speed up gradulally. 
+At the start of the simulator, the ego car is situated in lane = 1, and to accelerate without much jerk, I set the initial velocity to be zero, and it will speed up gradulally. But this part may be redundant.  
 ```
 if ((lane == 1) && (lane1_clear_rear == false) && (lane1_clear_front == true)) {
     if (ref_vel < 49.5) {
@@ -135,12 +135,12 @@ if ((lane == 1) && (lane1_clear_rear == false) && (lane1_clear_front == true)) {
     }
 } 
 ```
-If there is a car in front of the ego car, the first action is to slow down.  
+If there is a car in front of the ego car, the first reaction is to slow down.  
 ```
 else if (lane == 1 && lane1_clear_front == false) { 
   slow_down = true; 
 ```  
-Then check  both front and rear clearance for changing lanes (lane 0 or lane 2)
+Then check both front and rear clearance for changing lanes (to lane 0 or to lane 2, left priority is higher than right)
 ```
 // if the left lane is clear, move to left lane
 if (lane0_clear_front == true && lane0_clear_rear == true) {
@@ -151,7 +151,8 @@ else if (lane2_clear_front == true && lane2_clear_rear ==true ){
   lane = 2; 
 }
 ```
-Sometimes, the ego car would be trapped in a certain lane (ex: lane 1), and it will speed up and slow down repeatably, which is uncomfortable, so I add two more conditions: 
+Sometimes, the ego car could be trapped in a certain lane (ex: lane 1) becuase there is no chance to change lane. The ego car will speed up and slow down repeatably, which is very uncomfortable, so I add two more conditions to slow down, let other car passing by : 
+
 ```else if (lane0_clear_front == false && lane0_clear_rear == true) {
   ref_vel -= 0.224/2; 
 }  
@@ -160,4 +161,7 @@ else if (lane2_clear_front == false && lane2_clear_rear == true) {
   ref_vel -= 0.224/2; 
 }
 ```
-However, I don't' find them very useful; the best option is to follow the front car speed. However, I didn't successfully implement it in my code. My example is when the ego car is in lane 1, similar concepts also apply to lane 0 and lane 2. 
+However, I don't' find them very useful; the best option is to follow the front car speed. However, I didn't successfully implement it in my code. I will try it next round.
+In summary, my example above is when the ego car is in lane 1, similar concepts also apply to lane 0 and lane 2. 
+
+
