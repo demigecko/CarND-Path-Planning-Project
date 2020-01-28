@@ -124,7 +124,40 @@ To avoid collision during lane changing, we need to provide enough clearance for
 
 3. Avoid accelrateion, Jerk, and change lanes under certian condictions
 
-At the start of the simulator, the ego car is situated in lane = 1, and to accelerate without much jerk, I set the initial velocity to be zero, and it will speed up gradulally. 
-
 
 ![alt text][image4]
+
+At the start of the simulator, the ego car is situated in lane = 1, and to accelerate without much jerk, I set the initial velocity to be zero, and it will speed up gradulally. 
+```
+if ((lane == 1) && (lane1_clear_rear == false) && (lane1_clear_front == true)) {
+    if (ref_vel < 49.5) {
+      ref_vel += 0.224;
+    }
+} 
+```
+If there is a car in front of the ego car, the first action is to slow down.  
+```
+else if (lane == 1 && lane1_clear_front == false) { 
+  slow_down = true; 
+```  
+Then check  both front and rear clearance for changing lanes (lane 0 or lane 2)
+```
+// if the left lane is clear, move to left lane
+if (lane0_clear_front == true && lane0_clear_rear == true) {
+  lane = 0;
+} 
+// if left lane is not the option, then check the right lane 
+else if (lane2_clear_front == true && lane2_clear_rear ==true ){
+  lane = 2; 
+}
+```
+Sometimes, the ego car would be trapped in a certain lane (ex: lane 1), and it will speed up and slow down repeatably, which is uncomfortable, so I add two more conditions: 
+```else if (lane0_clear_front == false && lane0_clear_rear == true) {
+  ref_vel -= 0.224/2; 
+}  
+// if right lane is not ready, then slow down 
+else if (lane2_clear_front == false && lane2_clear_rear == true) {
+  ref_vel -= 0.224/2; 
+}
+```
+However, I don't' find them very useful; the best option is to follow the front car speed. However, I didn't successfully implement it in my code. My example is when the ego car is in lane 1, similar concepts also apply to lane 0 and lane 2. 
