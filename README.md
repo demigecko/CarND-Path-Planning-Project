@@ -1,6 +1,6 @@
 [//]: # (Image References)
 
-[image1]: ./image/front and rear clearance.png "logic explanation" 
+[image1]: ./image/front_and_rear_clearance.png "logic explanation" 
 [image2]: ./image/highway.png "illustration" 
 
 
