@@ -1,7 +1,7 @@
 [//]: # (Image References)
 
 [image1]: ./image/front and rear clearance.png "logic explanation" 
-[image2]: ./image/highway.png "logic explanation" 
+[image2]: ./image/highway.png "illustration" 
 
 
 I. File list
@@ -103,6 +103,7 @@ Total, we have 12 (id from 0 to 11) cars on the same side of the highway. I calc
 
 2. The concept of making the lane changing in code 
 - As I described earlier, I know the location of each car (check_car_s) and its estimated future location (check_car_s1) based on the previous path planning. From the check_car_s, I know the car is in front/rear of the ego car. From the check_car_s1, I know its future location within 50m front /30m rear apart.  
+ 
  ![alt text][image1]
  ![alt text][image2]
  
