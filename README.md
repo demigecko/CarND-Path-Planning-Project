@@ -2,7 +2,8 @@
 
 [image1]: ./image/front_and_rear_clearance.png "logic explanation" 
 [image2]: ./image/highway.png "illustration" 
-
+[image3]: ./image/boolean "logic explanation" 
+[image4]: ./image/change_lanes_example.png "example" 
 
 I. File list
 ------------
@@ -114,39 +115,5 @@ It is important is explain my classification here, especially car_laneX_front an
 
 At the start of the simulator, the ego car is situated in lane = 1, and to accelerate without much jerk, I set the initial velocity to be zero, and it will speed up gradulally. 
 
-```
-// if the ego car is in lane = 1 
-          // only when the car just start in lane 1   
-          if ((lane == 1) && (lane1_clear_rear == false) && (lane1_clear_front == true)) {
-              if (ref_vel < 49.5) {
-                ref_vel += 0.224;
-              }
-          } 
-          // if there is a car in front of the ego car
-          else if (lane == 1 && lane1_clear_front == false) { 
-            //slow down first 
-            slow_down = true; 
-            // check if it is safe of make a lane chane 
-            // if the left lane is clear, move to left lane
-            if (lane0_clear_front == true && lane0_clear_rear == true) {
-              lane = 0;
-            } 
-            // if left lane is not the option, then check the right lane 
-            else if (lane2_clear_front == true && lane2_clear_rear ==true ){
-              lane = 2; 
-            }
-            // if left lane is not ready, then slow down 
-            else if (lane0_clear_front == false && lane0_clear_rear == true) {
-              ref_vel -= 0.224/2; 
-            }  
-            // if right lane is not ready, then slow down 
-            else if (lane2_clear_front == false && lane2_clear_rear == true) {
-              ref_vel -= 0.224/2; 
-            }
-            else {
-              //ref_vel -= 0.224;
-              slow_down = true; 
-            }
-          } 
-
-```
+ ![alt text][image3]
+![alt text][image4]
