@@ -2,7 +2,7 @@
 
 [image1]: ./image/front_and_rear_clearance.png "logic explanation" 
 [image2]: ./image/highway.png "illustration" 
-[image3]: ./image/boolean "logic explanation" 
+[image3]: ./image/boolean.png "logic explanation" 
 [image4]: ./image/change_lanes_example.png "example" 
 
 I. File list
@@ -106,14 +106,20 @@ Total, we have 12 (id from 0 to 11) cars on the same side of the highway. I calc
 - As I described earlier, I know the location of each car (check_car_s) and its estimated future location (check_car_s1) based on the previous path planning. From the check_car_s, I know the car is in front/rear of the ego car. From the check_car_s1, I know its future location within 50m front /30m rear apart.  
  
  ![alt text][image1]
- ![alt text][image2]
+
  
-It is important is explain my classification here, especially car_laneX_front and car_laneX_rear. I define the front and rear in the present locatoin that other car is either front and rear of my ego car. In the case of the cars in front of my ego car in the presnet, I add the second condition that  ```abs(check_car_s1 - car_s) < 50```. the check_car_s1 is an estimated location of the car in front in the present, but its velocity could be lower than my ego car, and ego car can passing throught it. so the absolute value is to make sure it was showing up from front. This can help to aviod collision in a situation that a slower car in the ajsent lane and the ego car decideda to pass by and change lane 
+ It is important is to explain my classification here, especially I introduce the vectors like "car_laneX_front" and "car_laneX_rear" where X ranges from 0 to 2. Moreover, I introduced the boolean variables: "laneX_clear_front" and "laneX_clear_rear".  At each 0.02 second, the program will classify whether vehicles in "sensor fusion"  meets the criteria; if so, the push_back function will append the info () into the designated vector ```car_laneX_front.push_back(check_car_s)```  , and based on the size of the vector, whether 0 or not, to decide the boolean (the front or rear clearance) true or false. 
+ ![alt text][image3]
+
+After that, the following is a clear illustration to demonstrate the front clearance and rear clearance. 
+ ![alt text][image2]
+
+I define the front and rear in the present locatoin that other car is either front and rear of my ego car. In the case of the cars in front of my ego car in the presnet, I add the second condition that  ```abs(check_car_s1 - car_s) < 50```. the check_car_s1 is an estimated location of the car in front in the present, but its velocity could be lower than my ego car, and ego car can passing throught it. so the absolute value is to make sure it was showing up from front. This can help to aviod collision in a situation that a slower car in the ajsent lane and the ego car decideda to pass by and change lane 
 
 
 3. Avoid accelrateion, Jerk, and change lanes under certian condictions
 
 At the start of the simulator, the ego car is situated in lane = 1, and to accelerate without much jerk, I set the initial velocity to be zero, and it will speed up gradulally. 
 
- ![alt text][image3]
+
 ![alt text][image4]
