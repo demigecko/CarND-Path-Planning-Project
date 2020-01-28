@@ -1,3 +1,8 @@
+[//]: # (Image References)
+
+[image1]: ./data/highway.png "logic explanation" 
+
+
 I. File list
 ------------
 - main.cc		: main code implementation
@@ -134,7 +139,7 @@ Total, we have 12 (id from 0 to 11) cars on the same side of the highway. I calc
             }
           } // end of for loop 
  ```
- 
+ ![alt text][image1]
 It is important is explain my classification here, especially car_laneX_front and car_laneX_rear. I define the front and rear in the present locatoin that other car is either front and rear of my ego car. In the case of the cars in front of my ego car in the presnet, I add the second condition that  ```abs(check_car_s1 - car_s) < 50```. the check_car_s1 is an estimated location of the car in front in the present, but its velocity could be lower than my ego car, and ego car can passing throught it. so the absolute value is to make sure it was showing up from front. This can help to aviod collision in a situation that a slower car in the ajsent lane and the ego car decideda to pass by and change lane 
 
 
