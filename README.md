@@ -108,14 +108,19 @@ Total, we have 12 (id from 0 to 11) cars on the same side of the highway. I calc
  ![alt text][image1]
 
  
- It is important is to explain my classification here, especially I introduce the vectors like "car_laneX_front" and "car_laneX_rear" where X ranges from 0 to 2. Moreover, I introduced the boolean variables: "laneX_clear_front" and "laneX_clear_rear".  At each 0.02 second, the program will classify whether vehicles in "sensor fusion"  meets the criteria; if so, the push_back function will append the info () into the designated vector ```car_laneX_front.push_back(check_car_s)```  , and based on the size of the vector, whether 0 or not, to decide the boolean (the front or rear clearance) true or false. 
+ It is important is to explain my classification here, especially I introduce the vectors like "car_laneX_front" and "car_laneX_rear" where X ranges from 0 to 2. Moreover, I introduced the boolean variables: "laneX_clear_front" and "laneX_clear_rear".  At each 0.02 second, the program will classify the vehicles in "sensor_fusion data". If the conditions meet the criteria, then the push_back function will append the ```check_car_s``` into the designated vector.  ```car_laneX_front.push_back(check_car_s)```  , and based on the size of the vector, whether 0 or not, to decide the boolean (the front or rear clearance) true or false. 
+ 
  ![alt text][image3]
 
-After that, the following is a clear illustration to demonstrate the front clearance and rear clearance. 
+After that, the following is an illustration to demonstrate the front clearance and rear clearance in the situation that the ego car is in lane =1 and other vehicles are in lane =2. If the clearance is not enough, then the collision happens. 
+
  ![alt text][image2]
+ defiition: car_s is defined as the farest distnace s in the previous path planning. In othe other word, the tip of the green line.   
 
-I define the front and rear in the present locatoin that other car is either front and rear of my ego car. In the case of the cars in front of my ego car in the presnet, I add the second condition that  ```abs(check_car_s1 - car_s) < 50```. the check_car_s1 is an estimated location of the car in front in the present, but its velocity could be lower than my ego car, and ego car can passing throught it. so the absolute value is to make sure it was showing up from front. This can help to aviod collision in a situation that a slower car in the ajsent lane and the ego car decideda to pass by and change lane 
+- If the follwoing conditio meets : (check_car_s - car_s) > 0 and abs( check_car_s - car_s ) < 50, then lane2_clear_fornt will be false, which is case (A).   
+- If the follwoing conditio meets : (car_s - check_car_s) > 0 and abs( check_car_s - car_s ) < 30, than lane2_clear_rear will be false, whcih are case (C), case(D), and case(E).
 
+To avoid collision during lane changing, we need to provide enough clearance for both front condition and rear condition. I use two conditions to have more flexibility for later trials.  In the case of the front condition,  ```(check_car_s - car_s) >0 ```, I add the second condition that ```abs(check_car_s1 - car_s) < 50```. the check_car_s1 is the furthest s in the same previous planing fashion, but for another car, an estimated location of the car base on its speed and time span. Similiar concpet for the case of the rear condition. 
 
 3. Avoid accelrateion, Jerk, and change lanes under certian condictions
 
