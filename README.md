@@ -10,7 +10,7 @@ Self-Driving Car Engineer Nanodegree Program
 
 I. File list
 ------------
-- main.cc		: main code implementation
+- main.cpp		: main code implementation
 - spline.h		: add one file by myself
 - README			: this file
 
